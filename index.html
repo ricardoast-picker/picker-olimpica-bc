@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Droguerías Olímpica × Picker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: hsl(212 100% 97%); --card: hsl(0 0% 100%); --border: hsl(214 33% 91%);
+      --text: hsl(229 35% 16%); --sub: hsl(222 18% 38%); --muted: hsl(216 30% 60%);
+      --celeste: hsl(193 100% 45%); --celeste-dim: hsl(193 100% 45% / .1); --celeste-mid: hsl(193 100% 45% / .28);
+      --green: hsl(162 100% 36%); --green-dim: hsl(162 100% 44% / .1); --green-mid: hsl(162 100% 44% / .28); --green-text: hsl(162 100% 28%);
+      --amber: hsl(43 100% 40%); --amber-bg: hsl(43 100% 60% / .12); --amber-mid: hsl(43 100% 45% / .32);
+      --red: hsl(346 100% 42%); --red-bg: hsl(346 100% 60% / .1); --red-mid: hsl(346 100% 45% / .28);
+    }
+    html, body {
+      min-height: 100vh; background: var(--bg);
+      font-family: 'Montserrat', sans-serif; color: var(--text);
+      display: flex; align-items: center; justify-content: center; padding: 40px 24px;
+    }
+    .slide { width: 100%; max-width: 1160px; }
+
+    /* HEADER */
+    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+    .logo-row { display: flex; align-items: center; gap: 12px; }
+    .logo-ol { background: hsl(229 80% 40%); color: #fff; font-size: 10px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; padding: 5px 13px; border-radius: 6px; }
+    .logo-sep { font-size: 13px; color: var(--muted); }
+    .logo-pk { font-size: 10px; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; color: var(--celeste); border: 1.5px solid var(--celeste-mid); padding: 4px 12px; border-radius: 6px; }
+    .date-tag { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+    /* HEADLINE */
+    .headline { font-size: clamp(21px, 2.7vw, 31px); font-weight: 900; line-height: 1.15; color: var(--text); margin-bottom: 8px; }
+    .headline em { color: var(--celeste); font-style: normal; }
+    .subhead { font-size: 13px; color: var(--sub); font-weight: 500; margin-bottom: 32px; line-height: 1.6; }
+    .subhead strong { color: var(--text); font-weight: 700; }
+
+    .divider { height: 1px; background: var(--border); margin-bottom: 28px; }
+
+    /* MAIN GRID */
+    .main-grid { display: grid; grid-template-columns: 1fr 1px 1fr 1px 1.1fr; gap: 0; margin-bottom: 24px; align-items: start; }
+    .col { padding: 0 28px; }
+    .col:first-child { padding-left: 0; }
+    .col:last-child { padding-right: 0; }
+    .col-sep { background: var(--border); }
+
+    .col-label { font-size: 9.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 12px; }
+    .col-label.red { color: var(--red); }
+    .col-label.amber { color: var(--amber); }
+    .col-label.green { color: var(--green-text); }
+
+    .big-num { font-size: clamp(32px, 4.2vw, 52px); font-weight: 900; line-height: 1; margin-bottom: 5px; }
+    .big-num.red { color: var(--red); }
+    .big-num.amber { color: var(--amber); }
+    .big-num.green { color: var(--green-text); }
+    .big-num.celeste { color: var(--celeste); }
+
+    .num-card { border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; }
+    .num-card.red { background: var(--red-bg); border: 1px solid var(--red-mid); }
+    .num-card.amber { background: var(--amber-bg); border: 1px solid var(--amber-mid); }
+    .num-card.green { background: var(--green-dim); border: 1px solid var(--green-mid); }
+    .num-card.celeste { background: var(--celeste-dim); border: 1px solid var(--celeste-mid); }
+
+    .num-desc { font-size: 11.5px; color: var(--sub); font-weight: 500; line-height: 1.5; margin-top: 4px; }
+    .num-desc strong { color: var(--text); font-weight: 700; }
+
+    .stat-row { display: flex; flex-direction: column; gap: 8px; }
+    .stat-item { display: flex; align-items: flex-start; gap: 9px; font-size: 11px; color: var(--sub); line-height: 1.45; font-weight: 500; }
+    .dot { min-width: 6px; height: 6px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
+    .dot.red { background: var(--red); } .dot.amber { background: var(--amber); }
+    .dot.green { background: var(--green); } .dot.celeste { background: var(--celeste); }
+    .dot.muted { background: var(--muted); }
+    .stat-item strong { color: var(--text); font-weight: 700; }
+
+    /* REF BADGES */
+    .ref-row { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+    .ref-badge { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 8px; background: var(--green-dim); border: 1px solid var(--green-mid); font-size: 10.5px; font-weight: 700; color: var(--green-text); }
+    .ref-badge span { font-size: 9px; font-weight: 500; color: var(--sub); }
+
+    /* BANNER */
+    .banner { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px 28px; display: grid; grid-template-columns: 1fr 1px 1fr 1px 1fr; gap: 0; align-items: center; box-shadow: 0 2px 12px hsl(229 35% 16% / .06); }
+    .banner-col { padding: 0 24px; text-align: center; }
+    .banner-col:first-child { padding-left: 0; text-align: left; }
+    .banner-col:last-child { padding-right: 0; text-align: right; }
+    .banner-sep { background: var(--border); height: 48px; }
+    .banner-label { font-size: 9px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+    .banner-val { font-size: clamp(14px, 1.8vw, 22px); font-weight: 900; color: var(--text); }
+    .banner-val.green { color: var(--green-text); }
+    .banner-val.celeste { color: var(--celeste); }
+    .banner-sub { font-size: 10px; color: var(--muted); margin-top: 3px; font-weight: 500; }
+
+    /* FOOTER */
+    .footer { margin-top: 22px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .footer-note { font-size: 10px; color: var(--muted); font-weight: 500; line-height: 1.6; }
+    .cta { background: var(--celeste); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: 12px 24px; border-radius: 8px; white-space: nowrap; box-shadow: 0 2px 12px hsl(193 100% 45% / .28); }
+  </style>
+</head>
+<body>
+<div class="slide">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo-row">
+      <div class="logo-ol">Olímpica</div>
+      <div class="logo-sep">×</div>
+      <div class="logo-pk">Picker</div>
+    </div>
+    <div class="date-tag">Julio 2026</div>
+  </div>
+
+  <!-- HEADLINE -->
+  <div class="headline">Flash tiene el potencial de ser el 15% de tus ventas.<br/><em>Lo que falta no es demanda — es la infraestructura que lo soporte.</em></div>
+  <div class="subhead">
+    Olímpica tiene app, web, WhatsApp y 420+ tiendas. El cuello de botella no es el cliente —
+    es la capacidad de entrega de tu <strong>canal propio</strong> cuando la demanda escala.
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 3 COLUMNS -->
+  <div class="main-grid">
+
+    <!-- HOY -->
+    <div class="col">
+      <div class="col-label red">Flash hoy — canal propio sin escala</div>
+      <div class="num-card red">
+        <div class="big-num red">4.5%</div>
+        <div class="num-desc">de $6.9 billones COP en ventas son digitales — canal con <strong>mayor potencial sin aprovechar</strong></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-item"><div class="dot red"></div><span>Flash activo solo en una fracción de las 420 tiendas</span></div>
+        <div class="stat-item"><div class="dot red"></div><span>Rappi + Didi + Domicilios.com + Flash = <strong>4 operaciones separadas</strong>, sin visibilidad unificada</span></div>
+        <div class="stat-item"><div class="dot red"></div><span>50% de pagos en efectivo sin conciliación centralizada</span></div>
+        <div class="stat-item"><div class="dot red"></div><span>Si un proveedor falla, el pedido se pierde — sin backup automático</span></div>
+      </div>
+    </div>
+
+    <div class="col-sep"></div>
+
+    <!-- EL POTENCIAL -->
+    <div class="col">
+      <div class="col-label amber">El potencial — Flash a escala</div>
+      <div class="num-card amber">
+        <div class="big-num amber">+$724B</div>
+        <div class="num-desc">COP en ventas digitales adicionales si Flash llega al <strong>15% del total</strong> — sin abrir una tienda más</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-item"><div class="dot amber"></div><span>420 tiendas × 100 pedidos Flash/mes = <strong>42,000 pedidos/mes</strong> de canal propio</span></div>
+        <div class="stat-item"><div class="dot amber"></div><span>Sin orquestación, cada falla de proveedor es revenue perdido sin recuperación</span></div>
+        <div class="stat-item"><div class="dot amber"></div><span>Los dos proveedores que evalúas hoy cubren la flota — <strong>no la visibilidad ni el respaldo</strong></span></div>
+        <div class="stat-item"><div class="dot amber"></div><span>VTEX ya está: la integración de Picker al canal propio es directa</span></div>
+      </div>
+    </div>
+
+    <div class="col-sep"></div>
+
+    <!-- CON PICKER -->
+    <div class="col">
+      <div class="col-label green">Con Picker — Flash orquestado</div>
+      <div class="num-card celeste">
+        <div class="big-num celeste">96%</div>
+        <div class="num-desc">fulfillment en canal propio — <strong>los proveedores que ya tienes, orquestados</strong> con backup automático</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-item"><div class="dot green"></div><span>Picker no reemplaza a tus proveedores — los orquesta y agrega respaldo</span></div>
+        <div class="stat-item"><div class="dot green"></div><span>Un solo dashboard: Flash + Rappi + Didi + Domicilios en tiempo real</span></div>
+        <div class="stat-item"><div class="dot green"></div><span>Reglas automáticas: efectivo a proveedor A, express a B, farmacia delicada a flota propia</span></div>
+        <div class="stat-item"><div class="dot celeste"></div><span><strong>Integración VTEX ya probada</strong> — misma tecnología que usas hoy</span></div>
+      </div>
+
+      <div class="ref-row">
+        <div class="ref-badge">✓ Cruz Verde <span>Colombia · activo</span></div>
+        <div class="ref-badge">✓ FARMAENLACE <span>Ecuador · activo</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BANNER -->
+  <div class="banner">
+    <div class="banner-col">
+      <div class="banner-label">Industria — misma vertical ya funciona</div>
+      <div class="banner-val green">Farmacias + Droguerías</div>
+      <div class="banner-sub">Cruz Verde CO · FARMAENLACE EC · referencias reales</div>
+    </div>
+    <div class="banner-sep"></div>
+    <div class="banner-col">
+      <div class="banner-label">Integración con tu stack actual</div>
+      <div class="banner-val">VTEX · sin fricción</div>
+      <div class="banner-sub">ya integrado · los proveedores actuales se mantienen</div>
+    </div>
+    <div class="banner-sep"></div>
+    <div class="banner-col">
+      <div class="banner-label">Lo que propongo</div>
+      <div class="banner-val celeste">20 min · sin compromiso</div>
+      <div class="banner-sub">te muestro cómo lo hacen Cruz Verde y FARMAENLACE</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-note">
+      Estimado base: 420 tiendas · ventas digitales actuales 4.5% de $6.9B COP · potencial 15% = referencia industria retail farmacéutico LATAM<br/>
+      Pedidos Flash estimados: 100/mes por tienda en operación activa · Modelo conservador · datos públicos Olímpica 2025
+    </div>
+    <div class="cta">¿Agendamos 20 minutos?</div>
+  </div>
+
+</div>
+</body>
+</html>
